@@ -5,33 +5,20 @@ import keep_alive
 from discord.ext import commands
 
 #définition des instances
-"""
 default_intents = discord.Intents.default()
-client = discord.client(intents = default_intents)
-"""
-
-#avec commands.bot
-client = commands.bot(command_prefix="$")
+client = commands.bot(command_prefix="$", intents = default_intents)
 
 #activation des intents relatifs aux membres
-"""
 default_intents.members = True
-"""
 
 #indique que le bot est prêt à recevoir des instructions (/commandes)
 @client.event
 async def on_ready():
     print("The bot is ready !")
 
-#récupère un message envoyé sur le serveur discord
-@client.event
-async def on_message(message):
-    pass
-
 #message d'accueil (s'affiche sur replit et sur discord)
 @client.event
 async def on_member_join(member):
-    print(f"{member.display_name} joined the server !")
     join_channel = client.get_channel("mettre l'ID du salon en question")
     join_channel.send(f"Bienvenue sur le serveur {member.display_name} !")
 
@@ -43,10 +30,15 @@ async def on_message(message):
         for each_message in messages_history:
             await each_message.delete()
 
-#création d'une commande
+#commande pour supprimer des messages
 @client.command(name = "del")
 async def delete(ctx, number: int):
     messages_history = await ctx.channel.history(limit = number + 1).flatten
-    
-#connexion/mise en ligne du client
-client.run("TOKEN")
+    for each_message in messages_history:
+        await each_message.delete()
+
+#import de keep_alive pour que replit n'arrête pas l'execution du repl
+keep_alive.keep_alive()
+
+#connexion/mise en ligne du client + utilisation du token avec os pour le sécuriser
+client.run(os.environ["TOKEN"])
