@@ -1,12 +1,12 @@
 from bot_files.utils import *
 
 #commande pour changer le statut et/ou l'activité du bot
-async def change(ctx, status, activity, type):
+async def status(ctx, status, activity, type):
     try: 
         await ctx.message.delete() 
     except: 
         pass
-    if ctx.author.id == 691985543126581280:
+    if ctx.author.id == owner_id:
         if type == "Game" or type == "G":
             type = 1
         elif type == "Listen" or type == "L":
@@ -18,5 +18,6 @@ async def change(ctx, status, activity, type):
         else:
             return
         await client.change_presence(status = status, activity = discord.Activity(type = type, name = activity))
+        print(f"Statut modifié : \n status = \"{status}\" \n activity = \"{activity}\"")
     else:
         await ctx.channel.send(f"Seul le propriétaire du bot peut utiliser cette commande.", delete_after = 5)
