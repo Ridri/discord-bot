@@ -1,4 +1,5 @@
 from bot_files.utils import *
+from bot_files.var import *
 
 #commande pour changer le statut et/ou l'activité du bot
 async def status(ctx, status, activity, type):
