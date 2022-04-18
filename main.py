@@ -1,7 +1,6 @@
-#"""
 #import des fichiers et bibliothèques nécessaires
 from bot_files.utils import *
-from cmd_files.Files import *
+from cmd_files.files import *
 from bot_files.var import *
 
 #indique que le bot est prêt à recevoir des instructions (commandes)
@@ -61,4 +60,3 @@ keep_alive.keep_alive()
 
 #connexion/mise en ligne du client + utilisation du token avec os pour le sécuriser
 client.run(os.environ["TOKEN"])
-#"""
